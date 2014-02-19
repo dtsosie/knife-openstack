@@ -110,6 +110,13 @@ describe Chef::Knife::OpenstackServerCreate do
       @new_openstack_server.should_receive(:associate_address).with('111.111.111.111')
       @knife_openstack_create.run
     end
+
+    it "bootstraps instance with non-standard networks" do
+      @new_openstack_server.should_receive(:wait_for).and_return(true)
+      @new_openstack_server.addresses.shift
+      @new_openstack_server.addresses['not_really_public'] = @new_openstack_server.addresses.shift[1]
+      @knife_openstack_create.run
+    end
   end
 
   describe "when configuring the bootstrap process" do
