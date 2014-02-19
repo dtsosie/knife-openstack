@@ -141,7 +141,7 @@ class Chef
         end
 	addresses.values.flatten.each do |address|
 	  ip = IPAddress.parse address['addr']
-	  if(ip.class == IPAddress::IPv6 || ip.private?)
+	  if(ip.class == IPAddress::IPv6 || !ip.private?)
 	    return address['addr']
 	  end
 	end
