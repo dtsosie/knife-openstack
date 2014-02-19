@@ -113,12 +113,9 @@ describe Chef::Knife::OpenstackServerCreate do
 
     it "bootstraps instance with private ip on non-standard network" do
       @knife_openstack_create.config[:private_network] = true
-      puts @new_openstack_server.addresses
       @new_openstack_server.addresses.shift
       @new_openstack_server.addresses['not_really_public'] = @new_openstack_server.addresses.shift[1]
-      puts @new_openstack_server.addresses
       @new_openstack_server.should_receive(:wait_for).and_return(true)
-      puts @new_openstack_server.addresses
       @knife_openstack_create.run
     end
   end
