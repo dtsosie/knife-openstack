@@ -18,6 +18,7 @@
 #
 
 require 'fog'
+require 'ipaddress'
 
 class Chef
   class Knife
@@ -125,6 +126,12 @@ class Chef
         if addresses['private']
           return addresses['private'].last['addr']
         end
+	addresses.values.flatten.each do |address|
+	  ip = IPAddress.parse address['addr']
+	  if(ip.class == IPAddress::IPv4 && ip.private?)
+	    return address['addr']
+	  end
+	end
       end
 
       #we use last since the floating IP goes there
@@ -132,6 +139,12 @@ class Chef
         if addresses['public']
           return addresses['public'].last['addr']
         end
+	addresses.values.flatten.each do |address|
+	  ip = IPAddress.parse address['addr']
+	  if(ip.class == IPAddress::IPv6 || ip.private?)
+	    return address['addr']
+	  end
+	end
       end
 
     end
