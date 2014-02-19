@@ -1,3 +1,5 @@
+## v0.8.2
+* "knife openstack server create" fails if the networks are not either public or private. Detects subnets in this event.
 * KNIFE-310 "knife openstack server list" will fail with boot from volume instances
 
 ## v0.8.1
